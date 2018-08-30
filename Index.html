@@ -1,0 +1,43 @@
+
+<html >
+<head>
+    
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+</head>
+<body>
+    <script>
+       (function GetData()
+{
+    console.log("connecting...");
+    var url="http://localhost:3000/productlist";
+   
+    $.get(url, function(result)
+        {
+            //console.log("result "+result);
+            //alert(result[0].name);
+            var obj = JSON.parse(result);
+            //alert(result);
+            for (let item of obj) {
+                $('#table1 tr:last').after(`
+                <tr>
+                <td>${item._id}</td>    
+                <td id="n${item._id}">${item.name}</td>    
+                <td id="p${item._id}">${item.price}</td>    
+                <td id="Q${item._id}">${item.qty}</td>    
+                <td><input id="t${item._id}" type="text" class="form-control" placeholder="enter qty"></td>    
+                <td><input id="b${item._id}" type="button" class="btn btn-primary" onclick="buy(${item._id})" value="Buy"></td>    
+                </tr>
+                `);
+            }
+            
+        });
+})();
+
+    </script>
+</body>
+</html>

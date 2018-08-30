@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <title>Products</title>
+
+</head>
+<body>
+        <div class="container">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="table">
+                            <table id="table1" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Name</td>
+                                        <td>Price</td>
+                                        <td>Quntity</td>
+                                        <td>text</td>
+                                        <td>buy</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(let i=0;i < data.length;i++){%>
+                                    <tr>
+                                        <td><%=data[i]._id%></td>
+                                        <td id="n<%=data[i]._id%>"><%=data[i].name%></td>
+                                        <td id="p<%=data[i]._id%>"><%=data[i].price%></td>
+                                        <td id="Q<%=data[i]._id%>"><%=data[i].qty%></td>
+                                        <td><input id="t<%=data[i]._id%>" type="text" class="form-control" placeholder="enter qty"></td>
+                                        <td><input id="b<%=data[i]._id%>" type="button" class="btn btn-primary" onclick="buy('<%=data[i]._id%>')" value="Buy"></td>
+                                    </tr>
+                                    <%}%>
+                                </tbody>
+                            </table>
+                                    
+                        </div>
+                    </div>
+                </div>
+                        
+            </div>
+            <script src="index.js">
+            
+            </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Add Product</title>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="http://localhost:3000/admin">Socket IO</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="http://localhost:3000/admin">Product List</a></li>
+                <li><a href="http://localhost:3000/add">Add product</a></li>
+                <li><a href="http://localhost:3000/customer">Customer Service</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="panel panel-primary pnl">
+            <form action="http://localhost:3000/add" method="POST">
+                <div class="panel-body">
+                        <label for="name">Name: </label>
+                        <input id="name" name="name" type="text" required 
+                        class="form-control" placeholder="Product Name">
+        
+                        <label for="price">Price: </label>
+                        <input id="price" name="price" type="text" required 
+                        class="form-control" placeholder="Product Price">
+        
+                        <label for="qty">Quentity: </label>
+                        <input id="qty" name="qty" type="text" required 
+                        class="form-control" placeholder="Product Quentity">
+        
+                    </div>
+                    <div class="panel-footer">
+                        <input id="btn" type="submit" value="Save" class="btn btn-primary">
+                    </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        // var btn = document.getElementById('btn');
+        // btn.addEventListener('click',(err,data)=>{
+
+        // });
+    </script>
+</body>
+</html>

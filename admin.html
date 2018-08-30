@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html >
+<head>
+    
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="http://localhost:3000/admin">Socket IO</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="http://localhost:3000/admin">Product List</a></li>
+                <li><a href="http://localhost:3000/add">Add product</a></li>
+                <li><a href="http://localhost:3000/customer">Customer Service</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col-md-12">
+            
+        </div>
+        <div class="col-div-8">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="table">
+                        <table id="t1" class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Name</td>
+                                    <td>Price</td>
+                                    <td>Quntity</td>
+                                    <td>update</td>
+                                    <td>delete</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    
+    <script>
+        
+        var socket = io.connect('http://localhost:3000');
+
+        socket.on("update",(data)=>{
+           // console.log(data);
+            $("#n"+data.id).val(data.name);
+            $("#p"+data.id).val(data.price);
+            $("#q"+data.id).val(data.qtty);
+        });
+        socket.on("rc",(data)=>{
+            var oldQty = $("#q"+data.id).val();
+            if(oldQty>0){
+                $("#q"+data.id).val(data.qtty);
+            }
+        }); 
+        socket.on("delete",(id)=>{
+            console.log(id);
+            $("#t1").on('click','.btn',()=>{
+                $(this).closest('tr').remove();
+            })
+            
+        });
+        function update(id){
+            //alert('upadte' + id);
+            var name = $("#n"+id).val();
+            var price = $("#p"+id).val();
+            var qtty = $("#q"+id).val();
+            // console.log(id+name+price+qtty);
+            var data = {id,name,price,qtty};
+            // console.log(data.id);
+            socket.emit('chall',data);
+        };
+
+        function del(id)
+        {
+            socket.emit('delall',id);
+        }
+        (function GetData()
+        {
+            console.log("connecting...");
+            var url="http://localhost:3000/adminlist";
+           
+            $.get(url, function(result)
+                {
+                    
+                    var obj = JSON.parse(result);
+                    //alert(result);
+                    for (let item of obj) {
+                        let IID = item._id;
+                        $('#t1 tr:last').after(`
+                        <tr id="tr${item._id}">
+                        <td>${item._id}</td>    
+                        <td><input id="n${item._id}" type="text" value="${item.name}" class="form-control"></td>    
+                        <td><input id="p${item._id}" type="text" value="${item.price}" class="form-control"></td>    
+                        <td><input id="q${item._id}" type="text" value="${item.qty}" class="form-control"></td>    
+                        <td><input type="button" class="btn btn-primary" onclick="update('${item._id}')" value="Update"></td>    
+                        <td><input type="button" class="btn btn-primary" onclick="del('${item._id}')" value="Delete"></td>    
+                        </tr>
+                        `);
+                    }
+                });
+        })();
+
+
+    </script>
+</body>
+</html>
